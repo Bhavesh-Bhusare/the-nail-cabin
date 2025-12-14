@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family:
+        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@layer base {
+    :root {
+        /* Brand colors inspired by elegance and nail artistry */
+        --background: 0 0% 100%;
+        --foreground: 26 10% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 26 10% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 26 10% 10%;
+        --primary: 346 77% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 26 10% 96%;
+        --secondary-foreground: 26 10% 10%;
+        --muted: 20 20% 96%;
+        --muted-foreground: 26 10% 45%;
+        --accent: 340 82% 67%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 20 20% 90%;
+        --input: 20 20% 90%;
+        --ring: 346 77% 60%;
+        --chart-1: 346 77% 60%;
+        --chart-2: 340 82% 67%;
+        --chart-3: 26 10% 45%;
+        --chart-4: 20 20% 85%;
+        --chart-5: 10 30% 70%;
+        --radius: 0.5rem;
+    }
+    .dark {
+        --background: 26 10% 4%;
+        --foreground: 0 0% 98%;
+        --card: 26 10% 4%;
+        --card-foreground: 0 0% 98%;
+        --popover: 26 10% 4%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 346 77% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 26 10% 15%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 26 10% 15%;
+        --muted-foreground: 26 10% 64%;
+        --accent: 340 82% 67%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 26 10% 15%;
+        --input: 26 10% 15%;
+        --ring: 346 77% 60%;
+        --chart-1: 346 77% 60%;
+        --chart-2: 340 82% 67%;
+        --chart-3: 26 10% 64%;
+        --chart-4: 20 20% 25%;
+        --chart-5: 10 30% 40%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+
+    [data-debug-wrapper="true"] > * {
+        margin-left: inherit;
+        margin-right: inherit;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        padding-left: inherit;
+        padding-right: inherit;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        column-gap: inherit;
+        row-gap: inherit;
+        gap: inherit;
+        border-left-width: inherit;
+        border-right-width: inherit;
+        border-top-width: inherit;
+        border-bottom-width: inherit;
+        border-left-style: inherit;
+        border-right-style: inherit;
+        border-top-style: inherit;
+        border-bottom-style: inherit;
+        border-left-color: inherit;
+        border-right-color: inherit;
+        border-top-color: inherit;
+        border-bottom-color: inherit;
+    }
+}
