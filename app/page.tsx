@@ -298,7 +298,7 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 <Button
                   size="lg"
                   className="flex-1 bg-linear-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white"
