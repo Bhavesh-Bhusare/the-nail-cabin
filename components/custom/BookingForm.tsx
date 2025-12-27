@@ -84,14 +84,23 @@ export default function BookingForm() {
   const { data: slots = [], isLoading } = useQuery({
     queryKey: ["slots", selectedDate],
     queryFn: async () => {
+      if (!executeRecaptcha) throw new Error("Captcha not ready");
+
+      // 🔐 Generate captcha token for slot fetch
+      const captchaToken = await executeRecaptcha("fetch_slots");
+
       const res = await axios.post<SlotResponse>(
         "/api/v1/bookings/get-available-slots",
-        { date: format(selectedDate, "yyyy-MM-dd") }
+        {
+          date: format(selectedDate, "yyyy-MM-dd"),
+          captchaToken,
+        }
       );
+
       setDateId(res.data.data._id);
       return res.data.data.slots;
     },
-    enabled: !!selectedDate,
+    enabled: !!selectedDate && !!executeRecaptcha,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 30,
     refetchOnMount: false,
