@@ -1,6 +1,8 @@
+import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/custom/Footer";
-import "./globals.css";
 import Navbar from "@/components/custom/Navbar";
+import "./globals.css";
+import QueryProvider from "./queryProvider";
 
 export const metadata = {
   title: "The Nail Cabin | Luxury Nail Art Studio",
@@ -15,9 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <QueryProvider>
+          <Toaster />
+          <Navbar />
+          {children}
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );
