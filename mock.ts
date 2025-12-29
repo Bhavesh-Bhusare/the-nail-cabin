@@ -207,7 +207,7 @@ export const businessInfo = {
   phone: "+91 98765 43210",
   whatsapp: "+91 98765 43210",
   email: "info@thenailcabin.com",
-  timings: "Open daily, closes at 9 PM (Mondays close at 9 AM)",
+  timings: "Open daily, 9 AM - 9 PM",
   social: {
     instagram: "https://instagram.com/thenailcabin",
     facebook: "https://facebook.com/thenailcabin",
