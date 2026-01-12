@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   Form,
@@ -33,7 +34,7 @@ type BookingFormValues = {
   customerName: string;
   customerMobile: string;
   date: Date;
-  timeSlot: string; // slotId
+  timeSlot: string;
 };
 
 type Slot = {
@@ -46,7 +47,7 @@ type Slot = {
 type SlotResponse = {
   success: boolean;
   data: {
-    _id: string; // dateId
+    _id: string;
     date: string;
     slots: Slot[];
   };
@@ -67,6 +68,7 @@ export default function BookingForm() {
   const today = new Date();
 
   const [dateId, setDateId] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const form = useForm<BookingFormValues>({
     defaultValues: {
@@ -78,7 +80,6 @@ export default function BookingForm() {
   });
 
   const selectedDate = form.watch("date");
-
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const { data: slots = [], isLoading } = useQuery({
@@ -86,7 +87,6 @@ export default function BookingForm() {
     queryFn: async () => {
       if (!executeRecaptcha) throw new Error("Captcha not ready");
 
-      // 🔐 Generate captcha token for slot fetch
       const captchaToken = await executeRecaptcha("fetch_slots");
 
       const res = await axios.post<SlotResponse>(
@@ -112,14 +112,14 @@ export default function BookingForm() {
     form.setValue("timeSlot", "");
   }, [selectedDate]);
 
-  /* ------------------------------ Submit ------------------------------ */
-
   const onSubmit = async (values: BookingFormValues) => {
     try {
       if (!executeRecaptcha) {
         toast.error("reCAPTCHA not ready. Please try again.");
         return;
       }
+
+      setIsSubmitting(true);
 
       const captchaToken = await executeRecaptcha("create_booking");
 
@@ -134,7 +134,7 @@ export default function BookingForm() {
         date: format(values.date, "yyyy-MM-dd"),
         dateId,
         slotId: values.timeSlot,
-        captchaToken: captchaToken,
+        captchaToken,
       });
 
       toast.success("Booking confirmed!");
@@ -148,6 +148,8 @@ export default function BookingForm() {
     } catch (err) {
       console.error(err);
       toast.error("Failed to create booking");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -252,9 +254,13 @@ export default function BookingForm() {
                 </FormItem>
               )}
             />
-
-            <Button type="submit" className="w-full py-6 text-lg">
-              Confirm Booking
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-6 text-lg flex items-center justify-center gap-3"
+            >
+              {isSubmitting && <ClipLoader size={22} />}
+              {isSubmitting ? "Booking..." : "Confirm Booking"}
             </Button>
           </form>
         </Form>
